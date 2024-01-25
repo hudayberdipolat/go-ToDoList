@@ -1,7 +1,6 @@
 package jwtToken
 
 import (
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
@@ -19,7 +18,7 @@ func GenerateToken(userID int, username string) (string, error) {
 		Username: username,
 		UserID:   userID,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(2 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 2).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
@@ -30,17 +29,4 @@ func GenerateToken(userID int, username string) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
-}
-
-func VerifyToken(tokenString string) (*Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return token, nil
-	})
-	if err != nil {
-		return nil, err
-	}
-	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-		return claims, nil
-	}
-	return nil, fmt.Errorf("Invalid Token %s", err.Error())
 }

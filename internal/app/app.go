@@ -21,8 +21,8 @@ func NewApp(dependencies *Dependencies) (httpServer *fiber.App) {
 		AppName:      dependencies.Config.HttpServer.AppName,
 		BodyLimit:    30 * 1024 * 1024,
 		ServerHeader: dependencies.Config.HttpServer.AppHeader,
-		WriteTimeout: 3 * time.Minute,
-		ReadTimeout:  3 * time.Minute,
+		WriteTimeout: 1 * time.Minute,
+		ReadTimeout:  1 * time.Minute,
 	})
 	routes.Routes(httpServer)
 
