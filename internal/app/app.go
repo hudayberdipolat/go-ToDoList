@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/hudayberdipolat/go-ToDoList/internal/setup/routes"
 	"time"
 )
 
@@ -23,5 +24,7 @@ func NewApp(dependencies *Dependencies) (httpServer *fiber.App) {
 		WriteTimeout: 3 * time.Minute,
 		ReadTimeout:  3 * time.Minute,
 	})
+	routes.Routes(httpServer)
+
 	return httpServer
 }
