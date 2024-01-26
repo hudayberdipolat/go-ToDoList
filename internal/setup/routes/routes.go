@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	authConstructor "github.com/hudayberdipolat/go-ToDoList/internal/domain/auth/constructor"
 	listConstructor "github.com/hudayberdipolat/go-ToDoList/internal/domain/lists/constructor"
+	taskConstructor "github.com/hudayberdipolat/go-ToDoList/internal/domain/tasks/consturtor"
 	userConstructor "github.com/hudayberdipolat/go-ToDoList/internal/domain/user/constructor"
 	"github.com/hudayberdipolat/go-ToDoList/internal/middleware"
 )
@@ -30,4 +31,14 @@ func Routes(router *fiber.App) {
 	listRoute.Post("/create", listConstructor.ListHandler.Create)
 	listRoute.Put("/:listID/update", listConstructor.ListHandler.Update)
 	listRoute.Delete("/:listID/delete", listConstructor.ListHandler.Delete)
+
+	// task routes -->> /api/user/lists/{listID}/tasks
+
+	taskRoute := listRoute.Group("/:listID/tasks")
+	taskRoute.Get("", taskConstructor.TaskHandler.GetAll)
+	taskRoute.Get("/:taskID", taskConstructor.TaskHandler.GetOne)
+	taskRoute.Post("/create", taskConstructor.TaskHandler.Create)
+	taskRoute.Put("/:taskID/update", taskConstructor.TaskHandler.Update)
+	taskRoute.Delete("/:taskID/delete", taskConstructor.TaskHandler.Delete)
+
 }
